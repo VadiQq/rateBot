@@ -49,14 +49,13 @@ bot.hears(/^\/rate [a-zA-Z]{3}$/, async (ctx) => {
     );
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
     await parser(currencyLetterCode, null,
-        (result) => {
+        async (result) => {
             await ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
         },
-        (error) => {
+        async (error) => {
             await ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
         }
     );
-    ctx.reply('2');
 });
 
 bot.hears(/^\/rate [a-zA-Z]{3}\-[a-zA-Z]{3}$/, (ctx) => {
