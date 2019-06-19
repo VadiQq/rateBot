@@ -39,14 +39,14 @@ const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleF
         response.on('end', () => {
             const doc = new DOMParser({ errorHandler: lazyParserErrorHandler }).parseFromString(page);
             const table = doc.getElementById('historicalRateTbl');
-            if (table) {
-                const rate = parseCurrencyTable(currencyLiteralCode, table);
+            const rate = parseCurrencyTable(currencyLiteralCode, table);
+            if (rate !== null) {
                 rate.currencyCompare = compareCurrency;
                 resultHandleFunction(rate);
-            } else {
+            }
+            else {
                 errorHandleFunction('No matches found');
             }
-
         });
     }).end();
 }

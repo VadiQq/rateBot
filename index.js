@@ -6,9 +6,7 @@ const bot = new Telegraf(config.token, { webhookReply: true });
 bot.telegram.setWebhook(config.webhook);
 
 bot.hears(/\/start/, (ctx) => {
-    return ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
-        return ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`);
-    });
+    ctx.reply('Hello. Get daily currency exchange rate with this bot. /help');
 });
 
 bot.hears(/\/help/, (ctx) => {
@@ -64,11 +62,11 @@ module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(async () => {
             await setTimeout(() => {
-                res.end(200, 'OK');
+                res.end('OK');
             }, 1000);
         });
     }
     else {
-        res.end(400, 'Bad request');
+        res.end('Bad request');
     }
 };
