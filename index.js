@@ -1,9 +1,9 @@
 const Telegraf = require('telegraf');
 const config = require('./config.json');
 const parser = require('./currencyRateParser.js')
+const request = require('request');
 
-const bot = new Telegraf(config.token);
-bot.telegram.setWebhook('https://bot-project.vadikpointvadik.now.sh/', { setWebhook: true });
+const bot = new Telegraf(config.token, { setWebhook: true });
 
 bot.hears(/\/start/, (ctx) => {
     return ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
@@ -32,15 +32,28 @@ bot.on('sticker', (ctx) => {
     return ctx.reply('Nice one!').then(() => { return ctx.reply('Really nice') });
 });
 
-bot.hears(/^\/rate [a-zA-Z]{3}$/, (ctx) => {
+bot.hears(/^\/rate [a-zA-Z]{3}$/, async (ctx) => {
+    const sendMessageUrl = `https://api.telegram.org/bot${config.token}/sendMessage`;
+    request.post({
+        url: sendMessageUrl,
+        method: 'post',
+        body: {
+            chat_id: ctx.chatId,
+            text: 'post request'
+        },
+        json: true
+    },
+        (error, response, body) => {
+            console.log(body);
+        }
+    );
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
-    ctx.reply('1');
-    parser(currencyLetterCode, null,
+    await parser(currencyLetterCode, null,
         (result) => {
-            ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
+            await ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
         },
         (error) => {
-            ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
+            await ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
         }
     );
     ctx.reply('2');
