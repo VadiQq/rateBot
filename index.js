@@ -5,19 +5,19 @@ const request = require('request');
 const bot = new Telegraf(config.token, { webhookReply: true });
 
 bot.hears(/\/start/, async (ctx) => {
-    return await ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
+    return await ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(async () => {
         return await ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`);
     });
 });
 
 bot.hears(/\/help/, async (ctx) => {
-    return await ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
+    return await ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(async () => {
         return await ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`);
     });
 });
 
 bot.on('sticker', async (ctx) => {
-    return await ctx.reply('Nice one!').then(() => { return await ctx.reply('Really nice') });
+    return await ctx.reply('Nice one!').then(async () => { return await ctx.reply('Really nice') });
 });
 
 bot.hears(/^\/rate [a-zA-Z]{3}$/, async (ctx) => {
