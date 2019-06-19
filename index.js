@@ -72,6 +72,6 @@ module.exports = (req, res) => {
         });
     }
     else {
-        res.end(400);
+        res.end(400, 'Bad request');
     }
 };
