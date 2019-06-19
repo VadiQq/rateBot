@@ -67,7 +67,7 @@ module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(async () => {
             await setTimeout(() => {
-                res.end('OK');
+                res.end(200, 'OK');
             }, 1000);
         });
     }
