@@ -83,12 +83,13 @@ const setupAnswer = (currencyData) => {
 module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(() => {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end('OK');
+            setTimeout(()=>{
+                res.end('OK');
+            }, 2000);
+            
         });
     }
     else {
-        res.writeHead(400, {'Content-Type': 'text/html'});
         res.end('Bad request');
     }
 };
