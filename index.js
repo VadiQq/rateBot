@@ -3,7 +3,7 @@ const config = require('./config.json');
 const parser = require('./currencyRateParser.js')
 const request = require('request');
 
-const bot = new Telegraf(config.token, { webhookReply: false});
+const bot = new Telegraf(config.token);
 
 bot.hears(/\/start/, (ctx) => {
     return ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
@@ -33,8 +33,10 @@ bot.hears(/\/tost/, (ctx) => {
 });
 
 bot.hears(/\/test1/, (ctx) => {
-    ctx.reply('test1');
-    ctx.reply('test2');
+    return ctx.reply('test1').then(()=>{
+        return ctx.reply('test2');
+    });
+  
 });
 
 
@@ -44,21 +46,6 @@ bot.on('sticker', (ctx) => {
 });
 
 bot.hears(/^\/rate [a-zA-Z]{3}$/, (ctx) => {
-    const chatId = ctx.chat.id;
-    const sendMessageUrl = `https://api.telegram.org/bot${config.token}/sendMessage`;
-    request.post({
-        url: sendMessageUrl,
-        method: 'post',
-        body: {
-            chat_id: chatId,
-            text: 'post request'
-        },
-        json: true
-    },
-        (error, response, body) => {
-         
-        }
-    );
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
     parser(currencyLetterCode, null,
         (result) => {
@@ -96,10 +83,12 @@ const setupAnswer = (currencyData) => {
 module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(() => {
+            res.writeHead(200, {'Content-Type': 'text/html'});
             res.end('OK');
         });
     }
     else {
+        res.writeHead(400, {'Content-Type': 'text/html'});
         res.end('Bad request');
     }
 };
