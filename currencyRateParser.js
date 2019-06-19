@@ -28,10 +28,10 @@ const parseCurrencyTable = (currencyLiteralCode, table) => {
     return null;
 };
 
-const getCurrencyRate = async (currencyLiteralCode, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
+const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
     const compareCurrency = typeof (currencyToCompareTo) !== 'string' ? defaultCompareCurrency : currencyToCompareTo;
     const url = `${exchangeRateUrl}${compareCurrency}`;
-    await https.request(url, (response) => {
+    https.request(url, (response) => {
         let page = '';
         response.on('data', (chunk) => {
             page += chunk;
@@ -51,7 +51,7 @@ const getCurrencyRate = async (currencyLiteralCode, currencyToCompareTo, resultH
     }).end();
 }
 
-module.exports = async (currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
-    const rateData = typeof (currencyToCompareTo) !== 'string' ? await getCurrencyRate(currencyToLookFor, null, resultHandleFunction)
-        : await getCurrencyRate(currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction);
+module.exports = (currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
+    const rateData = typeof (currencyToCompareTo) !== 'string' ? getCurrencyRate(currencyToLookFor, null, resultHandleFunction)
+        : getCurrencyRate(currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction);
 }
