@@ -10,8 +10,6 @@ const exchangeRateUrl = config.exchangeRateUrl;
 
 const parseCurrencyTable = (currencyLiteralCode, table) => {
     const tableRows = table.getElementsByTagName('tr');
-
-    const result = [];
     for (let i = 1; i < tableRows.length; i++) {
         const rowCells = tableRows[i].getElementsByTagName('td');
         if (rowCells['0'].firstChild.firstChild.data === currencyLiteralCode) {
@@ -26,6 +24,8 @@ const parseCurrencyTable = (currencyLiteralCode, table) => {
             return currencyData;
         }
     }
+
+    return null;
 };
 
 const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
