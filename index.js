@@ -36,7 +36,7 @@ bot.hears(/^\/rate [a-zA-Z]{3}\-[a-zA-Z]{3}$/, async (ctx) => {
     var requestData = ctx.match.input.split(' ')[1].split('-');
     var currencyLetterCode = requestData[0].toUpperCase();
     var currencyCompare = requestData[1].toUpperCase();
-    ctx.reply(`Looking for ${currencyLetterCode} exchange rate to ${currencyCompare}`).then(() => {
+    ctx.reply(`Looking for ${currencyLetterCode} exchange rate to ${currencyCompare}`).then(async () => {
         await parser(currencyLetterCode, currencyCompare,
             (result) => {
                 ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
