@@ -12,7 +12,10 @@ bot.hears(/\/help/, (ctx) => ctx.reply(`Type /rate CUR (currency literal code) t
     ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`)
 }));
 
-bot.on('sticker', (ctx) => ctx.reply('Nice one!').then(()=> { ctx.reply('Really nice')}));
+bot.on('sticker', (ctx) => {
+    ctx.reply('Nice one!');
+    ctx.reply('Really nice');
+});
 
 bot.hears(/^\/rate [a-zA-Z]{3}$/, (ctx) => {
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
