@@ -38,7 +38,7 @@ bot.hears(/^\/rate [a-zA-Z]{3}$/, async (ctx) => {
         url: sendMessageUrl,
         method: 'post',
         body: {
-            chat_id: ctx.chatId,
+            chat_id: ctx.chat.chatId,
             text: 'post request'
         },
         json: true
