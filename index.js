@@ -37,16 +37,13 @@ bot.hears(/^\/rate [a-zA-Z]{3}\-[a-zA-Z]{3}$/, (ctx) => {
     var requestData = ctx.match.input.split(' ')[1].split('-');
     var currencyLetterCode = requestData[0].toUpperCase();
     var currencyCompare = requestData[1].toUpperCase();
-    ctx.reply(`Looking for ${currencyLetterCode} exchange rate to ${currencyCompare}`).then(async () => {
-        parser(currencyLetterCode, currencyCompare,
-            (result) => {
-                ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
-            },
-            (error) => {
-                ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
-            }
-        );
-    });
+    parser(currencyLetterCode, currencyCompare,
+        (result) => {
+            ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
+        },
+        (error) => {
+            ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
+        });
 });
 
 bot.on('message', (ctx) => {
