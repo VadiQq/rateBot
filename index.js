@@ -18,7 +18,18 @@ bot.hears(/\/help/, (ctx) => {
 });
 
 bot.hears(/\/test/, (ctx) => {
-    ctx.reply('test2');
+    return ctx.reply('test1').then(() => {
+        ctx.reply('test2');
+    });;
+});
+
+bot.hears(/\/tost/, (ctx) => {
+    return Promise.resolve()
+        .then(() => {
+            return ctx.reply('test1');
+        }).then(() => {
+            return ctx.reply('test2');
+        });
 });
 
 bot.hears(/\/test1/, (ctx) => {
@@ -32,28 +43,29 @@ bot.on('sticker', (ctx) => {
     return ctx.reply('Nice one!').then(() => { return ctx.reply('Really nice') });
 });
 
-bot.hears(/^\/rate [a-zA-Z]{3}$/, async (ctx) => {
+bot.hears(/^\/rate [a-zA-Z]{3}$/, (ctx) => {
+    const chatId = ctx.chat.id;
     const sendMessageUrl = `https://api.telegram.org/bot${config.token}/sendMessage`;
     request.post({
         url: sendMessageUrl,
         method: 'post',
         body: {
-            chat_id: ctx.chat.chatId,
+            chat_id: chatId,
             text: 'post request'
         },
         json: true
     },
         (error, response, body) => {
-            console.log(body);
+         
         }
     );
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
-    await parser(currencyLetterCode, null,
-        async (result) => {
-            await ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
+    parser(currencyLetterCode, null,
+        (result) => {
+            ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
         },
-        async (error) => {
-            await ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
+        (error) => {
+            ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
         }
     );
 });
@@ -76,6 +88,7 @@ bot.on('message', (ctx) => {
     ctx.reply('Unknown command', { reply_to_message_id: ctx.message.message_id })
 })
 
+bot.startPolling();
 const setupAnswer = (currencyData) => {
     const replyMessage = `<a href="${currencyData.currencyUrl}">${currencyData.currencyCode}</a> exchange rate to ${currencyData.currencyCompare} is ${currencyData.currencyRate}`;
     return replyMessage;
