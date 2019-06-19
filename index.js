@@ -1,5 +1,4 @@
 const Telegraf = require('telegraf');
-const Telegraf1 = require('dom-parser');
 const config = require('./config.json');
 const parser = require('./currencyRateParser.js')
 
