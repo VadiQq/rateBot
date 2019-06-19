@@ -1,4 +1,5 @@
 {
     "token" : "820765288:AAF6xoyK9hK4p56yehxPzFQyY3luEL3k18k",
-    "webhook" : "https://bot-project.vadikpointvadik.now.sh/"
+    "webhook" : "https://bot-project.vadikpointvadik.now.sh/",
+    "exchangeRateUrl" : "https://www.xe.com/currencytables/?from="
 }

@@ -1,13 +1,12 @@
 const https = require('https')
-const url_parser = require('url')
-const querystring = require('querystring');
+const config = require('./config.json');
 const DOMParser = require('xmldom').DOMParser;
 
 const lazyParserErrorHandler = {
     warning: () => { }
 }
 const defaultCompareCurrency = 'UAH';
-const exchangeRateUrl = 'https://www.xe.com/currencytables/?from=';
+const exchangeRateUrl = config.exchangeRateUrl;
 
 const parseCurrencyTable = (currencyLiteralCode, table) => {
     const tableRows = table.getElementsByTagName('tr');
@@ -29,7 +28,7 @@ const parseCurrencyTable = (currencyLiteralCode, table) => {
     }
 };
 
-const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleFunction) => {
+const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
     const compareCurrency = typeof (currencyToCompareTo) !== 'string' ? defaultCompareCurrency : currencyToCompareTo;
     const url = `${exchangeRateUrl}${compareCurrency}`;
     https.request(url, (res) => {
@@ -40,14 +39,19 @@ const getCurrencyRate = (currencyLiteralCode, currencyToCompareTo, resultHandleF
         res.on('end', () => {
             const doc = new DOMParser({ errorHandler: lazyParserErrorHandler }).parseFromString(page);
             const table = doc.getElementById('historicalRateTbl');
-            const rate = parseCurrencyTable(currencyLiteralCode, table);
-            rate.currencyCompare = compareCurrency;
-            resultHandleFunction(rate);
+            if (table) {
+                const rate = parseCurrencyTable(currencyLiteralCode, table);
+                rate.currencyCompare = compareCurrency;
+                resultHandleFunction(rate);
+            } else {
+                errorHandleFunction('No matches found');
+            }
+
         });
     }).end();
 }
 
 module.exports = (currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction) => {
     const rateData = typeof (currencyToCompareTo) !== 'string' ? getCurrencyRate(currencyToLookFor, null, resultHandleFunction)
-        : getCurrencyRate(currencyToLookFor, currencyToCompareTo, resultHandleFunction);
+        : getCurrencyRate(currencyToLookFor, currencyToCompareTo, resultHandleFunction, errorHandleFunction);
 }
