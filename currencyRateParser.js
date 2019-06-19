@@ -9,22 +9,24 @@ const defaultCompareCurrency = 'UAH';
 const exchangeRateUrl = config.exchangeRateUrl;
 
 const parseCurrencyTable = (currencyLiteralCode, table) => {
-    const tableRows = table.getElementsByTagName('tr');
-    for (let i = 1; i < tableRows.length; i++) {
-        const rowCells = tableRows[i].getElementsByTagName('td');
-        if (rowCells['0'].firstChild.firstChild.data === currencyLiteralCode) {
-            const currencyLink = rowCells[0].getElementsByTagName('a');
-            const currencyData = {
-                currencyCode: currencyLink[0].textContent,
-                currencyUrl: currencyLink[0].getAttribute('href'),
-                currencyName: rowCells['1'].firstChild.data,
-                currencyRate: rowCells['3'].firstChild.data
+    if(table !== null){
+        const tableRows = table.getElementsByTagName('tr');
+        for (let i = 1; i < tableRows.length; i++) {
+            const rowCells = tableRows[i].getElementsByTagName('td');
+            if (rowCells['0'].firstChild.firstChild.data === currencyLiteralCode) {
+                const currencyLink = rowCells[0].getElementsByTagName('a');
+                const currencyData = {
+                    currencyCode: currencyLink[0].textContent,
+                    currencyUrl: currencyLink[0].getAttribute('href'),
+                    currencyName: rowCells['1'].firstChild.data,
+                    currencyRate: rowCells['3'].firstChild.data
+                }
+    
+                return currencyData;
             }
-
-            return currencyData;
         }
     }
-
+    
     return null;
 };
 
