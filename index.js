@@ -65,11 +65,10 @@ const setupAnswer = (currencyData) => {
 module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(() => {
-
-            res.end('OK');
+            res.end(200);
         });
     }
     else {
-        res.end('Bad request');
+        res.end(400);
     }
 };
