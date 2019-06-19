@@ -88,7 +88,6 @@ bot.on('message', (ctx) => {
     ctx.reply('Unknown command', { reply_to_message_id: ctx.message.message_id })
 })
 
-bot.startPolling();
 const setupAnswer = (currencyData) => {
     const replyMessage = `<a href="${currencyData.currencyUrl}">${currencyData.currencyCode}</a> exchange rate to ${currencyData.currencyCompare} is ${currencyData.currencyRate}`;
     return replyMessage;
