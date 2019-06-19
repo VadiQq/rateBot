@@ -49,7 +49,7 @@ bot.on('message', (ctx) => {
 })
 
 const setupAnswer = (currencyData) => {
-    const replyMessage = `<a href="${currencyData.currencyUrl}">${currencyData.currencyCode}</a> exchange rate to ${currencyData.currencyCompare} is ${currencyData.currencyRate} units`;
+    const replyMessage = `<a href="${currencyData.currencyUrl}">${currencyData.currencyCode}</a> exchange rate to ${currencyData.currencyCompare} is ${currencyData.currencyRate}`;
     return replyMessage;
 }
 
