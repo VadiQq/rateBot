@@ -16,12 +16,12 @@ bot.hears(/\/help/, (ctx) => {
     });
 });
 
-bot.on(/\/test/, (ctx) => {
+bot.hears(/\/test/, (ctx) => {
      ctx.reply('test1');
      ctx.reply('test2');
 });
 
-bot.on(/\/test1/, (ctx) => {
+bot.hears(/\/test1/, (ctx) => {
     ctx.reply('test1');
     ctx.reply('test2');
 });
