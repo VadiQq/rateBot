@@ -4,7 +4,7 @@ const parser = require('./currencyRateParser.js')
 
 const bot = new Telegraf(config.token, { webhookReply: true });
 
-bot.hears(/\/start/, (ctx) => ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
+bot.hears(/\/start/, (ctx) => ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then((msg) => {
     ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`)
 }));
 
@@ -12,7 +12,7 @@ bot.hears(/\/help/, (ctx) => ctx.reply(`Type /rate CUR (currency literal code) t
     ctx.reply(`Type /rate CUR-CMP (currency literal code)-(compare currency code) to get daily exchange rate to specific currency`)
 }));
 
-bot.on('sticker', (ctx) => ctx.reply('Nice one!'));
+bot.on('sticker', (ctx) => ctx.reply('Nice one!').then(()=> { ctx.reply('Really nice')}));
 
 bot.hears(/^\/rate [a-zA-Z]{3}$/, (ctx) => {
     var currencyLetterCode = ctx.match.input.split(' ')[1].toUpperCase();
