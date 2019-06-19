@@ -39,10 +39,10 @@ bot.hears(/^\/rate [a-zA-Z]{3}\-[a-zA-Z]{3}$/, (ctx) => {
     return ctx.reply(`Looking for ${currencyLetterCode} exchange rate to ${currencyCompare}`).then(() => {
         parser(currencyLetterCode, currencyCompare,
             (result) => {
-                ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
+               return ctx.reply(setupAnswer(result), { parse_mode: 'HTML', disable_web_page_preview: true, reply_to_message_id: ctx.message.message_id });
             },
             (error) => {
-                ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
+               return ctx.reply(error, { reply_to_message_id: ctx.message.message_id });
             }
         );
     });
@@ -65,9 +65,8 @@ const setupAnswer = (currencyData) => {
 module.exports = (req, res) => {
     if (req.body) {
         bot.handleUpdate(req.body, res).then(() => {
-           setTimeout(()=>{
-            res.end(200, 'OK');
-           }, 4000);
+
+            res.end('OK');
         });
     }
     else {
