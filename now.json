@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "bot-project",
+  "routes": [{ "src": "/820765288:AAF6xoyK9hK4p56yehxPzFQyY3luEL3k18k", "dest": "/index.js" }],
+  "builds": [{ "src": "index.js", "use": "@now/node" }]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "bot-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^6.2.0",
+    "firebase-admin": "^8.1.0",
+    "grpc": "^1.21.1",
+    "node-telegram-bot-api": "^0.30.0",
+    "now": "^15.5.0",
+    "telegraf": "^3.30.1",
+    "xmldom": "^0.1.27"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "",
+    "build": "echo bot-project",
+    "deploy": "now alias --token $NOW_TOKEN $(now --token $NOW_TOKEN --name \"bot-project\") \"bot-project\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VadiQq/jsExamTask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VadiQq/jsExamTask/issues"
+  },
+  "homepage": "https://github.com/VadiQq/jsExamTask#readme"
+}
