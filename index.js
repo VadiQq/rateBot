@@ -3,7 +3,7 @@ const config = require('./config.json');
 const parser = require('./currencyRateParser.js')
 const request = require('request');
 
-const bot = new Telegraf(config.token, { setWebhook: true });
+const bot = new Telegraf(config.token, { webhookReply: false});
 
 bot.hears(/\/start/, (ctx) => {
     return ctx.reply(`Type /rate CUR (currency literal code) to get daily exchange rate to UAH`).then(() => {
