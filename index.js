@@ -21,6 +21,12 @@ bot.on(/\/test/, (ctx) => {
      ctx.reply('test2');
 });
 
+bot.on(/\/test1/, (ctx) => {
+    ctx.reply('test1');
+    ctx.reply('test2');
+});
+
+
 
 bot.on('sticker', (ctx) => {
     return ctx.reply('Nice one!').then(() => { return ctx.reply('Really nice') });
