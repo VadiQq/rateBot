@@ -6,7 +6,7 @@
   "dependencies": {
     "firebase": "^6.2.0",
     "firebase-admin": "^8.1.0",
-    "grpc": "^1.21.1",
+    "grpc": "^1.24.9",
     "node-telegram-bot-api": "^0.30.0",
     "now": "^15.5.0",
     "telegraf": "^3.30.1",
